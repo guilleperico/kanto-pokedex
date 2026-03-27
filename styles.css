@@ -1,0 +1,407 @@
+:root {
+  --bg: #f0f4ff;
+  --card-bg: #ffffff;
+  --red: #e3350d;
+  --yellow: #ffcb05;
+  --blue: #3d7dca;
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+
+header {
+  background: var(--red);
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pokeball-icon {
+  width: 48px;
+  height: 48px;
+  background: conic-gradient(#fff 0deg 180deg, #e3350d 180deg 360deg);
+  border-radius: 50%;
+  border: 3px solid #222;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.pokeball-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  border: 3px solid #222;
+}
+
+header h1 {
+  color: var(--yellow);
+  font-size: 2rem;
+  font-weight: 900;
+  text-shadow: 2px 2px 0 #222;
+  letter-spacing: 1px;
+}
+
+header p {
+  color: #ffe;
+  font-size: 0.9rem;
+}
+
+/* ── Controls ── */
+
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 700px;
+}
+
+#search,
+#num-filter,
+#type-filter {
+  padding: 10px 16px;
+  border-radius: 30px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: var(--shadow);
+}
+
+#search {
+  flex: 1;
+  min-width: 180px;
+}
+
+#num-filter {
+  width: 110px;
+}
+
+#num-filter::-webkit-inner-spin-button,
+#num-filter::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+#type-filter {
+  font-size: 0.95rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* ── Grid ── */
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+#count {
+  text-align: center;
+  color: #555;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* ── Card ── */
+
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 16px 12px 12px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.18s, box-shadow 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.card-num {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-size: 0.72rem;
+  color: #aaa;
+  font-weight: 700;
+}
+
+.card img {
+  width: 96px;
+  height: 96px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.card-name {
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 6px 0 8px;
+  color: #222;
+}
+
+/* ── Type Badges ── */
+
+.types {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.type-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+/* ── Loading / Error ── */
+
+#loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #ddd;
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Modal ── */
+
+#modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+#modal-overlay.open {
+  display: flex;
+}
+
+#modal {
+  background: #fff;
+  border-radius: 24px;
+  max-width: 480px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  animation: pop 0.2s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.modal-header {
+  padding: 24px 24px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.modal-header img {
+  width: 120px;
+  height: 120px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.modal-title h2 {
+  text-transform: capitalize;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #222;
+}
+
+.modal-title .modal-num {
+  color: #aaa;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.modal-body {
+  padding: 0 24px 24px;
+}
+
+.modal-section {
+  margin-bottom: 14px;
+}
+
+.modal-section h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+/* ── Info Row ── */
+
+.info-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  background: #f5f5f5;
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ── Abilities ── */
+
+.abilities-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ability-badge {
+  background: #f0f4ff;
+  border: 1.5px solid #c5d0e8;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: #3d5a99;
+}
+
+/* ── Stats ── */
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  width: 90px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.stat-bar-bg {
+  flex: 1;
+  background: #eee;
+  border-radius: 10px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.stat-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.6s ease;
+}
+
+.stat-val {
+  width: 32px;
+  text-align: right;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* ── Modal Close Button ── */
+
+.modal-close {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 32px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(227, 53, 13, 0.4);
+  transition: background 0.15s;
+}
+
+.modal-close:hover {
+  background: #c0290c;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  #grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+  }
+}
